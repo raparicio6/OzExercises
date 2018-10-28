@@ -1,0 +1,3 @@
+﻿1. Las referencias externas de P son Q y U.
+2. La referencia externa de P es Q.
+3. La referencia externa de P es P.
