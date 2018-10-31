@@ -1,0 +1,4 @@
+Una funcion o procedimiento tail recursive se llama a sí misma hasta que se llega a su condicion final.
+A diferencia de la recursividad normal, se pasa resultados intermedios a sí mismo (excepto la última).
+Así, las variables creadas en el store quedan sin utilizar y se pueden desechar.
+Entonces no habrá pilas en cola esperando, y esto evita posibles overflows.

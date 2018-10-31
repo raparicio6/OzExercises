@@ -1,0 +1,1 @@
+Currying consiste en convertir la evaluacion de una función o procedimiento que tiene múltiples argumentos en una secuencia anidada de funciones con un argumento de una.
