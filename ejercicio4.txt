@@ -1,0 +1,35 @@
+PREDICCIÓN
+
+{Test [b c a]} => El resultado sera case(4).
+{Test f(b(3))} => El resultado sera case(5).
+{Test f(a)} => El resultado sera case(2).
+{Test f(a(3))} => El resultado sera case(5).
+{Test f(d)} => El resultado sera case(5).
+{Test [a b c]} => El resultado sera case(1).
+{Test [c a b]} => El resultado sera case(4).
+{Test a|a} => El resultado sera case(1).
+{Test '|'(v b)} => El resultado sera case(4).
+{Test '|'(a a)} => El resultado sera case(1).
+{Test '|'(b b)} => El resultado sera case(3).
+{Test '|'(a b c)} => El resultado sera case(4).
+{Test '|'(a [b c])} => El resultado sera case(1).
+
+RESULTADOS REALES
+
+{Test [b c a]} => 'case'(4).
+{Test f(b(3))} => 'case'(5).
+{Test f(a)} => 'case'(2).
+{Test f(a(3))} => 'case'(5).
+{Test f(d)} => 'case'(5).
+{Test [a b c]} => 'case'(1).
+{Test [c a b]} => 'case'(4).
+{Test a|a} => 'case'(1).
+{Test '|'(v b)} => 'case'(4).
+{Test '|'(a a)} => 'case'(1).
+{Test '|'(b b)} => 'case'(3).
+{Test '|'(a b c)} => 'case'(6). [DIFERENTE]
+{Test '|'(a [b c])} => 'case'(1).
+
+ANÁLISIS
+
+La diferencia se debe a que, inicialmente, creíamos que el operador '|' generaba una lista a partir de todos los valores recibidos pero, en realidad, genera una tupla con el label '|' que, para el caso particular de dos valores, es una lista. Por lo tanto, "'|'(a b c)" es una tupla de tres valores con el label '|' y, por ende, se imprime case(6).
