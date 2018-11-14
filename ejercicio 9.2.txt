@@ -1,0 +1,5 @@
+Si imprimo en browser el resultado del llamado a Reverse1 y Reverse2, ambas muestran una serie de lineas,
+ya que todavía no hay un valor en la variable mostrada debido a la evaluacion lazy.
+
+Pero si se hace {Browse L1.1} o {Browse L2.1} siendo L1 y L2 los resultados devueltos por Reverse1 y Reverse2 respectivamente,
+se invoca las dos funciones Rev y ahora sí se obtiene la lista invertida. Podemos concluir que lazy sólo afecta Reverse y no Rev.
