@@ -1,0 +1,7 @@
+El programa mostrara lo siguiente:
+- TRUE
+- TRUE
+- FALSE
+- TRUE
+
+Esto se debe a que X e Y son la misma celda y, por lo tanto, ambas son iguales y sus contenidos también, pero Z e Y son diferentes celdas con el mismo contenido y, entonces, Z==Y devolverá FALSE.
