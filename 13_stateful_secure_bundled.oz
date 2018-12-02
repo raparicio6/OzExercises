@@ -55,7 +55,7 @@ end
 		if Res\=notfound then
 		   {D.put H Res+1}
 		else
-		   {D.put H 0}
+		   {D.put H 1}
 		end
 		{StringToDic D T}
 	     end
