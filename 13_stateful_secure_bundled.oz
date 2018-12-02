@@ -46,12 +46,46 @@ in
    ops(put:Put get:Get equals: Equals getId: GetId)
 end
 
-local D D2 D3 in
+   local D D2 D3 StringToDic Anagramas Str1 Str2 Str3 Str4 in
+
+   fun {StringToDic D S}
+      case S of nil then D
+      [] H|T then local Res in
+		Res = {D.get H}
+		if Res\=notfound then
+		   {D.put H Res+1}
+		else
+		   {D.put H 0}
+		end
+		{StringToDic D T}
+	     end
+      else
+	 nil
+      end
+   end
+
+   fun {Anagramas S1 S2}
+      local D1 D2 in
+	 D1 = {StringToDic {NewDicc} S1}
+	 D2 = {StringToDic {NewDicc} S2}
+	 {D1.equals D2}
+      end
+   end
+   {Browse 'Anagram tests'}
+   Str1 = "TOMMARVOLORIDDLE"
+   Str2 = "IAMLORDVOLDEMORT"
+   Str3 = "ELVIS"
+   Str4 = "LIVES"
+   {Browse {Anagramas Str1 Str2}}
+   {Browse {Anagramas Str1 Str3}}
+   {Browse {Anagramas Str3 Str4}}
+   
+   {Browse 'Other random tests'}
+%tests
    D={NewDicc}
    {Browse D}
    {Browse {D.get 1}}
    {D.put 1 'one'}
-   {Browse D}
    {D.put 3 'three'}
    {Browse {D.get 1}}
    
@@ -70,6 +104,5 @@ local D D2 D3 in
    {D2.put 9 'nine'}
    {Browse {D.equals D2}}
    {Browse {D2.equals D}}
-
 end
 end
