@@ -61,6 +61,15 @@ extension BinarySearchTree {
   public func contains(value: Character) -> Bool {
     return search(value) != nil
   }
+
+  public func getIntOfValue(value: Character) -> Int? {
+    let val = search(value) 
+    if val != nil {
+      return val!.value.1
+    }
+
+    return nil    
+  }
   
   public func minimum() -> BinarySearchTree {
     var node = self
@@ -101,16 +110,16 @@ extension BinarySearchTree: CustomStringConvertible {
 struct Dictionary {
     private var tree: BinarySearchTree?
 
-    init() {        
-      self.tree = nil
+    public init() {        
+      tree = nil
     }
     
-    mutating func set(key: Character) -> Dictionary {
+    public func put(key: Character) -> Dictionary {
       var newTree: BinarySearchTree
-      if (self.tree === nil){
+      if (tree === nil){
         newTree = BinarySearchTree(value: key)
       } else {
-        newTree = self.tree!.copy()
+        newTree = tree!.copy()
         newTree.insert(value: key)
       }    
 
@@ -119,9 +128,13 @@ struct Dictionary {
       return newDict      
     }    
     
-    //func get(key: Character) -> Int? {
-      
-    //}   
+    public func get(key: Character) -> Int? {
+      if (tree === nil){
+        return 0
+      }        
+
+      return tree!.getIntOfValue(value: key)
+    }   
 }
 
 let tree = BinarySearchTree(value: ("d"))
@@ -140,10 +153,11 @@ let arr = "ddagfza"
 var aa = Dictionary()
 
 for letra in arr {
-  let b = aa.set(key: letra)  
-  print(aa)
-  print(b)
+  aa = aa.put(key: letra)  
+  print(aa) 
 }
+
+print(aa.get(key: "f"))
 
 
 /* 
