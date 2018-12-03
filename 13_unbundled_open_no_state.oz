@@ -4,22 +4,22 @@ local Dic in
 
       fun {Put T K V}
          case T
-         of nil then tree(K V nil nil)
-         [] tree(Y W T1 T2) andthen K == Y then
-            tree(K W + V T1 T2)
-         [] tree(Y W T1 T2) andthen K < Y then
-            tree(Y W {Put T1 K V} T2)
-         [] tree(Y W T1 T2) andthen K > Y then
-            tree(Y W T1 {Put T2 K V})
+         of nil then tree(K V {NewDicc} {NewDicc})
+         [] tree(X Y T1 T2) andthen K == X then
+            tree(X Y + V T1 T2)
+         [] tree(X Y T1 T2) andthen K < X then
+            tree(X Y {Put T1 K V} T2)
+         [] tree(X Y T1 T2) andthen K > X then
+            tree(X Y T1 {Put T2 K V})
          end
       end
 
       fun {Get T K}
          case T
          of nil then 0
-         [] tree(Y V T1 T2) andthen K == Y then V
-         [] tree(Y V T1 T2) andthen K < Y then {Get T1 K}
-         [] tree(Y V T1 T2) andthen K > Y then {Get T2 K}
+         [] tree(X Y T1 T2) andthen K == X then Y
+         [] tree(X Y T1 T2) andthen K < X then {Get T1 K}
+         [] tree(X Y T1 T2) andthen K > X then {Get T2 K}
          end
       end
 
