@@ -41,36 +41,7 @@ fun {DiccOps Dicc}
          else nil end
       end
    end
-/*
-   fun {Imprimir}
-      proc {Imprimir1 D1 ?S1 Sn}
-         case D1 of nil then S1 = Sn
-         [] tree(K V L R) then S2 S3 in
-            {Imprimir1 L S1 S2}
-            S2 = K#V|S3
-            {Imprimir1 R S3 Sn}
-         else S1 = nil
-         end
-      end D
-   in
-      {Imprimir1 Dicc D nil} D
-   end
-   
-   fun {Equals X}
-      local
-         fun {Eq D X}
-            local A B in
-               A = {D.p}
-               B = {X.p}
-               {Browse B}
-               A == B
-            end
-         end
-      in
-         {Eq Dicc X}
-      end
-   end
-*/
+
    fun {Equals OtroDicc}
       local A B in
          A = {Sort {VirtualString.toString {Value.toVirtualString Dicc 0 0} } Value.'<'}
