@@ -6,7 +6,7 @@ public class BinarySearchTree {
   private var right: BinarySearchTree?
 
   public init(value: Character) {
-    self.value = (value, 1)
+    self.value = (Character(String(value).lowercased()), 1)
   }
 
   private convenience init(value: (Character, Int), parent: BinarySearchTree?, left: BinarySearchTree?, right: BinarySearchTree?) {
@@ -60,7 +60,7 @@ extension BinarySearchTree {
 
   public func getIntOfValue(value: Character) -> Int? {
     let val = search(value) 
-    if val != nil {
+    if val !== nil {
       return val!.value.1
     }
 
@@ -71,15 +71,15 @@ extension BinarySearchTree {
 
 extension BinarySearchTree {
   public func map(_ f: ((Character, Int)) -> (Character, Int)) -> [(Character, Int)] {
-    var a = [(Character, Int)]()
-    if let left = left { a += left.map(f) }
-    a.append(f(value))
-    if let right = right { a += right.map(f) }
-    return a
+    var i = [(Character, Int)]()
+    if let left = left { i += left.map(f) }
+    i.append(f(value))
+    if let right = right { i += right.map(f) }
+    return i
   }
 
   public func toArray() -> [(Character, Int)] {
-      return map { $0 }
+    return map { $0 }
   }
 
 }
@@ -87,15 +87,15 @@ extension BinarySearchTree {
 extension BinarySearchTree: CustomStringConvertible {
   // para imprimir
   public var description: String {
-    var s = ""
+    var d = ""
     if let left = left {
-      s += "(\(left.description)) <- "
+      d += "(\(left.description)) <- "
     }
-    s += "\(value)"
+    d += "\(value)"
     if let right = right {
-      s += " -> (\(right.description))"
+      d += " -> (\(right.description))"
     }
-    return s
+    return d
   } 
 
 }
@@ -170,35 +170,23 @@ struct Dictionary {
 
 }
 
-let tree = BinarySearchTree(value: ("d"))
-tree.insert(value: ("e"))
-tree.insert(value: ("b"))
-tree.insert(value: ("a"))
-tree.insert(value: ("c"))
-tree.insert(value: ("f"))
-tree.insert(value: ("e"))
-tree.insert(value: ("a"))
+func sonAnagramas(_ texto1: String, _ texto2: String) -> Bool {
+  var dicc1 = Dictionary.newDicc()
+  var dicc2 = Dictionary.newDicc()
 
-let arr = "ddagfzaz"
+  for letra in texto1 {
+    dicc1 = dicc1.put(key: letra)    
+  }
 
-var dic1 = Dictionary.newDicc()
-var dic2 = Dictionary.newDicc()
+  for letra in texto2 {
+    dicc2 = dicc2.put(key: letra)    
+  } 
 
-for letra in arr {
-  dic1 = dic1.put(key: letra)
-  dic2 = dic2.put(key: letra)  
+  return dicc1.equals(dicc2)
 }
 
-dic2 = dic2.put(key: "a")
-
-print(dic1.equals(dic2))
-
-
-
-/* 
-actualizar el arbol con el item que me dan, 
-y crear un nuevo diccionario con ese arbol actualizado
-
-propiedades privadas
-todo dentro de la clase
-*/
+print(sonAnagramas("quieren", "Enrique")) // true
+print(sonAnagramas("necrofila", "Florencia")) // true
+print(sonAnagramas("saco", "cosa")) // true
+print(sonAnagramas("chau", "hola")) // false
+print(sonAnagramas("holaa", "hola")) // false
