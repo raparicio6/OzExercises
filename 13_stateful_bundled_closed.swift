@@ -40,11 +40,11 @@ extension BinarySearchTree {
         right = BinarySearchTree(value: value)
         right?.parent = self
       }
-    } else {      
+    } else { // ya existe, le sumo uno al segundo elemento de la tupla
       self.value = (self.value.0, (self.value.1) + 1)
     }
-
   }
+
 }
 
 extension BinarySearchTree {  
@@ -58,33 +58,28 @@ extension BinarySearchTree {
     }
   }  
 
-  public func contains(value: Character) -> Bool {
-    return search(value) != nil
-  }
-
   public func getIntOfValue(value: Character) -> Int? {
     let val = search(value) 
     if val != nil {
       return val!.value.1
     }
 
-    return nil    
+    return 0    
   }
-  
-  public func minimum() -> BinarySearchTree {
-    var node = self
-    while let next = node.left {
-      node = next
-    }
-    return node
+
+}
+
+extension BinarySearchTree {
+  public func map(_ f: ((Character, Int)) -> (Character, Int)) -> [(Character, Int)] {
+    var a = [(Character, Int)]()
+    if let left = left { a += left.map(f) }
+    a.append(f(value))
+    if let right = right { a += right.map(f) }
+    return a
   }
-  
-  public func maximum() -> BinarySearchTree {
-    var node = self
-    while let next = node.right {
-      node = next
-    }
-    return node
+
+  public func toArray() -> [(Character, Int)] {
+      return map { $0 }
   }
 
 }
@@ -108,33 +103,71 @@ extension BinarySearchTree: CustomStringConvertible {
 // -----------------------------------------------------
 
 struct Dictionary {
-    private var tree: BinarySearchTree?
+  private var tree: BinarySearchTree?
 
-    public init() {        
-      tree = nil
-    }
+  private init() {        
+    tree = nil
+  }
+
+  public static func newDicc() -> Dictionary{
+    return Dictionary()
+  }
     
-    public func put(key: Character) -> Dictionary {
-      var newTree: BinarySearchTree
-      if (tree === nil){
-        newTree = BinarySearchTree(value: key)
-      } else {
-        newTree = tree!.copy()
-        newTree.insert(value: key)
-      }    
-
-      var newDict = Dictionary()
-      newDict.tree = newTree
-      return newDict      
+  public func put(key: Character) -> Dictionary {
+    var newTree: BinarySearchTree
+    if (tree === nil){
+      newTree = BinarySearchTree(value: key)
+    } else {
+      newTree = tree!.copy()
+      newTree.insert(value: key)
     }    
-    
-    public func get(key: Character) -> Int? {
-      if (tree === nil){
-        return 0
-      }        
 
-      return tree!.getIntOfValue(value: key)
-    }   
+    var newDict = Dictionary.newDicc()
+    newDict.tree = newTree
+    return newDict      
+  }    
+    
+  public func get(key: Character) -> Int {
+    if (tree === nil){
+      return 0
+    }        
+
+    return tree!.getIntOfValue(value: key)!
+  }    
+
+  public func equals(_ dictionary: Dictionary) -> Bool {
+    if (tree === nil){
+      if (dictionary.tree === nil){
+        return true
+      }
+      return false
+    }
+
+    if (dictionary.tree === nil){
+      return false
+    }
+
+    var arr1 = tree!.toArray()
+    var arr2 = dictionary.tree!.toArray()
+
+    if (arr1.count != arr2.count) {
+      return false
+    }      
+
+    arr1 = tree!.toArray().sorted(by: { $0.0 < $1.0 })
+    arr2 = dictionary.tree!.toArray().sorted(by: { $0.0 < $1.0 })    
+
+    for index in 0...arr1.count - 1 {
+      if arr1[index].0 == arr2[index].0 && arr1[index].1 == arr2[index].1{
+        continue
+      }        
+      
+      return false
+    }
+
+    return true    
+  }   
+
 }
 
 let tree = BinarySearchTree(value: ("d"))
@@ -146,18 +179,20 @@ tree.insert(value: ("f"))
 tree.insert(value: ("e"))
 tree.insert(value: ("a"))
 
-print(tree)
+let arr = "ddagfzaz"
 
-let arr = "ddagfza"
-
-var aa = Dictionary()
+var dic1 = Dictionary.newDicc()
+var dic2 = Dictionary.newDicc()
 
 for letra in arr {
-  aa = aa.put(key: letra)  
-  print(aa) 
+  dic1 = dic1.put(key: letra)
+  dic2 = dic2.put(key: letra)  
 }
 
-print(aa.get(key: "f"))
+dic2 = dic2.put(key: "a")
+
+print(dic1.equals(dic2))
+
 
 
 /* 
