@@ -31,7 +31,7 @@ local Dic in
       Dic = dic(new:NewDicc put:Put get:Get equals:Equals)
    end
 
-   local StringToDic Anagramas Str1 Str2 Str3 Str4 Str5 Str6 in
+   local StringToDic Anagramas Str1 Str2 Str3 Str4 Str5 Str6 Str7 Str8 Str9 in
       fun {StringToDic D S}
          case S of nil then D
          [] H|T then {Dic.put {StringToDic D T} H 1}
@@ -49,11 +49,16 @@ local Dic in
       Str4 = "ELVIS"
       Str5 = "PODER"
       Str6 = "PEDRO"
+      Str7 = "OOP"
+      Str8 = "POO"
+      Str9 = "OP"
       {Browse {Anagramas Str1 Str2}} % Debe ser false.
       {Browse {Anagramas Str1 Str3}} % Debe ser false.
       {Browse {Anagramas Str3 Str4}} % Debe ser true.
       {Browse {Anagramas Str5 Str6}} % Debe ser true.
       {Browse {Anagramas Str5 Str3}} % Debe ser false.
+      {Browse {Anagramas Str7 Str8}} % Debe ser true.
+      {Browse {Anagramas Str7 Str9}} % Debe ser false.
 
       {Browse 'Other tests'}
       {Browse {Dic.get {Dic.put {Dic.new} 5 '5'} 5}} % Debe ser '5'.
