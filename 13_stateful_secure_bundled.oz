@@ -1,33 +1,33 @@
 %Implementacion con estado, seguro y empaquetado
 
-local NewDicc in
+local Dic in
 
    
-   fun {NewDicc}
-      C={NewCell leaf}
-      proc {Put Key Val}
-	 fun {Put2 D Key Val}
-	    case D of leaf then tree(Key Val leaf leaf)
-	    [] tree(K V T1 T2) andthen Key==K then tree(Key Val T1 T2)
-	    [] tree(K V T1 T2) andthen Key < K then tree(K V {Put2 T1 Key Val} T2)
-	    [] tree(K V T1 T2) andthen Key > K then tree(K V T1 {Put2 T2 Key Val})
+   fun {Dic}
+      C={NewCell hoja}
+      proc {Put Clave Valor}
+	 fun {Put2 D Clave Valor}
+	    case D of hoja then tree(Clave Valor hoja hoja)
+	    [] tree(Clave2 Valor2 T1 T2) andthen Clave==Clave2 then tree(Clave Valor T1 T2)
+	    [] tree(Clave2 Valor2 T1 T2) andthen Clave < Clave2 then tree(Clave2 Valor2 {Put2 T1 Clave Valor} T2)
+	    [] tree(Clave2 Valor2 T1 T2) andthen Clave > Clave2 then tree(Clave2 Valor2 T1 {Put2 T2 Clave Valor})
 	    else nil
 	    end
 	 end
       in
-	 C:= {Put2 @C Key Val}
+	 C:= {Put2 @C Clave Valor}
       end
-      fun {Get Key}
-	 fun {Get2 D Key}
-	    case D of leaf then notfound
-	    [] tree(K V T1 T2) andthen Key==K then V
-	    [] tree(K V T1 T2) andthen Key<K then {Get2 T1 Key}
-	    [] tree(K V T1 T2) andthen Key>K then {Get2 T2 Key}
+      fun {Get Clave}
+	 fun {Get2 D Clave}
+	    case D of hoja then notfound
+	    [] tree(Clave2 Valor2 T1 T2) andthen Clave==Clave2 then Valor2
+	    [] tree(Clave2 Valor2 T1 T2) andthen Clave<Clave2 then {Get2 T1 Clave}
+	    [] tree(Clave2 Valor2 T1 T2) andthen Clave>Clave2 then {Get2 T2 Clave}
 	    else nil
 	    end
 	 end
      in
-	 {Get2 @C Key}
+	 {Get2 @C Clave}
       end
   
     fun {GetId}
@@ -66,8 +66,8 @@ end
 
    fun {Anagramas S1 S2}
       local D1 D2 in
-	 D1 = {StringToDic {NewDicc} S1}
-	 D2 = {StringToDic {NewDicc} S2}
+	 D1 = {StringToDic {Dic} S1}
+	 D2 = {StringToDic {Dic} S2}
 	 {D1.equals D2}
       end
    end
@@ -80,29 +80,5 @@ end
    {Browse {Anagramas Str1 Str3}}
    {Browse {Anagramas Str3 Str4}}
    
-   {Browse 'Other random tests'}
-%tests
-   D={NewDicc}
-   {Browse D}
-   {Browse {D.get 1}}
-   {D.put 1 'one'}
-   {D.put 3 'three'}
-   {Browse {D.get 1}}
-   
-   {D.put 8 'eight'}
-   {D.put 0 'zero'}
-   {Browse {D.get 0}}
-   {D.put 9 'nine'}
-   {Browse {D.equals D}}
-
-   D2 = {NewDicc}
-   {D2.put 1 'one'}
-   {D2.put 3 'three'}
-   {D2.put 8 'eight'}
-   {D2.put 0 'zero'}
-   {Browse {D.equals D2}}
-   {D2.put 9 'nine'}
-   {Browse {D.equals D2}}
-   {Browse {D2.equals D}}
 end
 end
