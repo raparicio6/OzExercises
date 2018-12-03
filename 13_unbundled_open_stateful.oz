@@ -2,27 +2,29 @@
 
 local Dic  in
     local
-       fun {NewDicc} {NewCell nil} end
+       fun {NewDicc} 
+            {NewCell nil}
+       end
 
-      fun {Get T Key}
+      fun {Get T Clave}
 	     case @T
 	     of nil then 0
-	     [] tree(K V T1 T2) andthen Key==K then V
-	     [] tree(K V T1 T2) andthen Key<K then {Get T1 Key}
-	     [] tree(K V T1 T2) andthen Key>K then {Get T2 Key}
+	     [] tree(K Valor T1 T2) andthen Clave==K then Valor
+	     [] tree(K Valor T1 T2) andthen Clave<K then {Get T1 Clave}
+	     [] tree(K Valor T1 T2) andthen Clave>K then {Get T2 Clave}
 	     end
 	  end
 
 
-	  proc {Put T Key Value}
+	  proc {Put T Clave Valor}
 	     case @T
-	     of nil then T := tree(Key Value {NewDicc} {NewDicc})
-	     [] tree(K V T1 T2) andthen Key==K then
-		T := tree(Key V+Value T1 T2)
-	     [] tree(K V T1 T2) andthen Key<K then
-		{Put T1 Key Value}
-	     [] tree(K V T1 T2) andthen Key>K then
-		{Put T2 Key Value}
+	     of nil then T := tree(Clave Valor {NewDicc} {NewDicc})
+	     [] tree(K Valor2 T1 T2) andthen Clave==K then
+		T := tree(Clave Valor2+Valor T1 T2)
+	     [] tree(K Valor T1 T2) andthen Clave<K then
+		{Put T1 Clave Valor}
+	     [] tree(K Valor T1 T2) andthen Clave>K then
+		{Put T2 Clave Valor}
 	     end
 	  end
 	  
@@ -30,7 +32,7 @@ local Dic  in
 
 	  fun {Equals D1 D2}
 	     {Sort {VirtualString.toString {Value.toVirtualString @D1 0 0} } Value.'<'} == {Sort {VirtualString.toString {Value.toVirtualString @D2 0 0} } Value.'<'}
-	  end
+end
 	  
     in
        Dic = dic(new:NewDicc put:Put get:Get equals:Equals)
@@ -73,23 +75,5 @@ local Dic  in
        {Browse {Anagramas Str3 Str4}}
        {Browse {Anagramas Str5 Str6}}
        {Browse {Anagramas Str5 Str3}}
-   
-       
-       {Browse 'Other tests'}
-       Dic1 = {Dic.new}
-       {Dic.put Dic1 5 '5'}
-       {Browse Dic1}
-       {Browse {Dic.get Dic1 5}}
-       Dic2 = {Dic.new}
-       {Browse {Dic.equals Dic1 Dic2}}
-       {Dic.put Dic2 5 '5'}
-       {Browse {Dic.equals Dic1 Dic2}}
-       {Browse {Dic.equals Dic1 Dic1}}
-
-       {Dic.put Dic1 1 '1'}
-       {Browse {Dic.equals Dic1 Dic2}}
-       {Dic.put Dic2 1 '1'}
-       {Browse {Dic.equals Dic1 Dic2}}
-    end
-    
+    end   
 end
